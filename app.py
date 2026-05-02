@@ -33,7 +33,22 @@ threading.Thread(target=run_flask, daemon=True).start()
 
 # --- MODIFICATION DANS LE LANCEMENT FINAL ---
 from telegram.request import HTTPXRequest
+import time
 
+def self_ping():
+    # Remplacez par votre URL Render réelle
+    url = "https://ocr-telegram-bot-8fq7.onrender.com/"
+    while True:
+        try:
+            with httpx.Client() as client:
+                client.get(url)
+            print("Ping réussi pour maintenir Render éveillé")
+        except Exception as e:
+            print(f"Erreur lors du ping: {e}")
+        time.sleep(900)  # Attend 15 minutes (900 secondes)
+
+# Lancer le ping dans un thread séparé (juste après run_flask)
+threading.Thread(target=self_ping, daemon=True).start()
 if __name__ == "__main__":
     td_request = HTTPXRequest(connect_timeout=60, read_timeout=60)
     application = ApplicationBuilder().token(TOKEN_BOT).request(td_request).build()
