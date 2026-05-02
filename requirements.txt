@@ -1,0 +1,7 @@
+python-telegram-bot
+flask
+pytesseract
+pdf2image
+python-docx
+aiocryptopay
+httpx
