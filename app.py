@@ -13,6 +13,17 @@ from flask import Flask
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ApplicationBuilder, ContextTypes, MessageHandler, CommandHandler, CallbackQueryHandler, filters
 from telegram.request import HTTPXRequest
+from threading import Thread
+
+app = Flask('')
+
+@app.route('/')
+def home():
+    return "Bot is alive"
+
+def run():
+    app.run(host='0.0.0.0', port=10000)
+
 
 # 1. RÉCUPÉRATION SÉCURISÉE DES SECRETS
 TOKEN_BOT = os.getenv("TOKEN_BOT") 
@@ -162,5 +173,7 @@ def admin_validation(call):
 
 if __name__ == "__main__":
     init_db()
+     # On lance le serveur web sur le port 10000 dans un fil séparé
+    Thread(target=run).start() 
     print("Bot is live...")
     bot.polling() 
