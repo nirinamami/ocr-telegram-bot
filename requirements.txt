@@ -5,3 +5,5 @@ Pillow
 flask
 httpx
 python-docx
+pyTelegramBotAPI
+requests
