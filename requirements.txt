@@ -1,7 +1,6 @@
-python-telegram-bot
-flask
+python-telegram-bot[job-queue]
 pytesseract
 pdf2image
-python-docx
-aiocryptopay
+Pillow
+flask
 httpx
