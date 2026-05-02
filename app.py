@@ -1,5 +1,7 @@
 import os
 import threading
+import time
+import httpx         # <--- INDISPENSABLE pour le ping
 import pytesseract
 from pdf2image import convert_from_path
 from docx import Document
