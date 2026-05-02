@@ -1,1 +1,7 @@
+# Gérer automatiquement les fins de ligne pour les fichiers texte
 * text=auto
+
+# S'assurer que les scripts Python et Dockerfile utilisent des fins de ligne Linux (LF)
+*.py text eol=lf
+Dockerfile text eol=lf
+requirements.txt text eol=lf
