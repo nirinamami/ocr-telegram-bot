@@ -70,22 +70,37 @@ def send_welcome(message):
         f"👋 *Bienvenue sur HZLMaminirinaRHbot !*\n\n"
         f"Assistant OCR professionnel.\n"
         f"🎁 *Cadeau :* 1ère conversion GRATUITE (si < 10 Mo) !\n"
-        f"💰 *Tarif :* 0.001 USDT par conversion.\n\n"
+        f"💰 *Tarif :* 0.1 USDT par conversion.\n\n"
         f"Utilisez /buy pour acheter des crédits ou envoyez un document."
     )
     bot.send_message(message.chat.id, welcome_text, parse_mode='Markdown')
+@bot.message_handler(commands=['help'])
+def send_help(message):
+    markup = types.InlineKeyboardMarkup(row_width=2)
+    btn_buy = types.InlineKeyboardButton("💳 Acheter des crédits", callback_data="pay_5")
+    btn_status = types.InlineKeyboardButton("📊 Mon Solde", callback_data="check_balance")
+    btn_contact = types.InlineKeyboardButton("💬 Contacter l'Admin", url="https://t.me/HZLMaminirinaRH")
+    markup.add(btn_buy, btn_status)
+    markup.add(btn_contact)
+    help_text = ("❓ *Besoin d'aide ?* ...") # (Le reste du texte aide)
+    bot.send_message(message.chat.id, help_text, reply_markup=markup, parse_mode='Markdown')
 
+@bot.message_handler(commands=['status'])
+def show_status(message):
+    user_id = message.from_user.id
+    credits = get_credits(user_id)
+    bot.reply_to(message, f"📊 *État de votre compte :*\n\nID : `{user_id}`\nCrédits restants : *{credits}*", parse_mode='Markdown')
 @bot.message_handler(commands=['buy'])
 def buy_credits(message):
     markup = types.InlineKeyboardMarkup()
-    markup.add(types.InlineKeyboardButton("Payer 10 USDT (50 OCR)", callback_data="pay_10"))
+    markup.add(types.InlineKeyboardButton("Payer 5 USDT (50 OCR)", callback_data="pay_5"))
     bot.send_message(message.chat.id, "Choisissez votre pack de crédits :", reply_markup=markup)
 
-@bot.callback_query_handler(func=lambda call: call.data == "pay_10")
+@bot.callback_query_handler(func=lambda call: call.data == "pay_5")
 def process_payment(call):
     msg = (
         f"💳 *PAIEMENT USDT (TRC20)*\n\n"
-        f"Envoyez **10 USDT** à :\n`{USDT_ADDRESS}`\n\n"
+        f"Envoyez **5 USDT** à :\n`{USDT_ADDRESS}`\n\n"
         f"Répondez avec le **TxID (Hash)** de la transaction."
     )
     sent_msg = bot.edit_message_text(msg, call.message.chat.id, call.message.message_id, parse_mode='Markdown')
