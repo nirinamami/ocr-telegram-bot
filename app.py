@@ -79,7 +79,7 @@ async def handle_document(update, context):
 
     if conversions == 0:
         # Première fois : Vérifier la taille (Cadeau < 3 Mo)
-        if file_size_mb <= 3:
+        if file_size_mb <= 10:
             await update.message.reply_text("🎁 Première conversion gratuite (< 3 Mo) !")
             increment_user_conversions(user_id)
             return await process_ocr(update, context)
