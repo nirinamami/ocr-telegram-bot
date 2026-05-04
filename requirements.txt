@@ -1,9 +1,5 @@
-python-telegram-bot[job-queue]
-pytesseract
-pdf2image
-Pillow
-flask
-httpx
-python-docx
 pyTelegramBotAPI
 requests
+flask
+pymongo
+dnspython
