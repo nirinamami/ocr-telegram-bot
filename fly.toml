@@ -1,6 +1,13 @@
 app = "ocr-telegram-bot"
 primary_region = "iad"
 
+[http_service]
+  internal_port = 10000
+  force_https = true
+  auto_start_machines = true
+  auto_stop_machines = false
+  min_machines_running = 1
+
 [[vm]]
   cpu_kind = "shared"
   cpus = 1
